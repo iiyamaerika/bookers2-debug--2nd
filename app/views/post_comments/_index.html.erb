@@ -2,7 +2,7 @@
     <% book.post_comments.each do |post_comment| %>
     <tr>
       <td>
-        <%= link_to(post_comment.user) do%>
+        <%= link_to user_path(post_comment.user) do %>
           <%= image_tag post_comment.user.get_profile_image("100x100") %><br>
           <%= post_comment.user.name %>
         <% end %>

@@ -15,9 +15,9 @@
   <tr>
     <th>followers</th>
     <th><%= user.followers.count %></th>
-    </tr>
+  </tr>
 </table>
-　
+
 <div class='row'>
   <% if user == current_user %>
     <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block edit_user_#{user.id}" do %>

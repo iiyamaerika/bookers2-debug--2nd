@@ -10,14 +10,12 @@ class PostCommentsController < ApplicationController
     unless @post_comment.save
       render 'error'
     end
-
   end
 
   def destroy
     @book = Book.find(params[:book_id])
-    @post_comment =  PostComment.find(params[:id])
+    @post_comment = PostComment.find(params[:id])
     @post_comment.destroy
-
   end
 
   private
@@ -25,5 +23,4 @@ class PostCommentsController < ApplicationController
   def post_comment_params
     params.require(:post_comment).permit(:comment)
   end
-
 end

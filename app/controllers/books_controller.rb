@@ -6,11 +6,15 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @book_new = Book.new
     @post_comment = PostComment.new
-
   end
 
   def index
-    @books = Book.all
+    to  = Time.current.at_end_of_day
+    from  = (to - 6.day).at_beginning_of_day
+    @books = Book.includes(:favorites_users).sort{|a,b|
+      b.favorites_users.includes(:favorites).where(created_at: from...to).size <=>
+      a.favorites_users.includes(:favorites).where(created_at: from...to).size
+    }
     @book = Book.new
   end
 
@@ -21,7 +25,7 @@ class BooksController < ApplicationController
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @books = Book.all
-       render 'index'
+      render 'index'
     end
   end
 
@@ -49,13 +53,11 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body)
   end
-  
+
   def ensure_correct_user
     @book = Book.find(params[:id])
-    unless 
-      @book.user == current_user
+    unless @book.user == current_user
       redirect_to books_path
     end
   end
-  
 end

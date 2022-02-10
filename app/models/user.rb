@@ -19,6 +19,9 @@ class User < ApplicationRecord
   #DM機能
   has_many :user_rooms, dependent: :destroy
   has_many :chats, dependent: :destroy
+  
+  #閲覧数
+  has_many :view_counts, dependent: :destroy
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
